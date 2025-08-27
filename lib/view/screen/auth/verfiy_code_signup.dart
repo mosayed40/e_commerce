@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/class/status_request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -14,9 +15,7 @@ class VerfiyCodeSignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VirfiyCodeSignUpControllerImp myController = Get.put(
-      VirfiyCodeSignUpControllerImp(),
-    );
+    Get.put(VirfiyCodeSignUpControllerImp());
 
     return Scaffold(
       appBar: AppBar(
@@ -29,34 +28,51 @@ class VerfiyCodeSignUp extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-        alignment: Alignment.center,
-        child: ListView(
-          children: [
-            const SizedBox(height: 50),
-            const CustomTextTitleAuth(textTitle: "40"),
-            const SizedBox(height: 20),
-            const CustomTextBodyAuth(textBody: "41"),
-            const SizedBox(height: 50),
-
-            Lottie.asset(AppImageAsset.verfiyEmail, height: 150, width: 150),
-            const SizedBox(height: 50),
-
-            OTPTextField(
-              length: 5,
-              width: MediaQuery.of(context).size.width,
-              textFieldAlignment: MainAxisAlignment.spaceAround,
-              fieldWidth: 45,
-              fieldStyle: FieldStyle.box,
-              outlineBorderRadius: 15,
-              style: TextStyle(fontSize: 17),
-              onCompleted: (pin) {
-                myController.goToSuccessSignUp();
-              },
-            ),
-          ],
-        ),
+      body: GetBuilder<VirfiyCodeSignUpControllerImp>(
+        builder:
+            (myController) =>
+                myController.statusRequest == StatusRequest.loading
+                    ? Center(
+                      child: Lottie.asset(
+                        AppImageAsset.loading,
+                        height: 150,
+                        width: 150,
+                      ),
+                    )
+                    : Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      alignment: Alignment.center,
+                      child: ListView(
+                        children: [
+                          const SizedBox(height: 50),
+                          const CustomTextTitleAuth(textTitle: "40"),
+                          const SizedBox(height: 20),
+                          const CustomTextBodyAuth(textBody: "41"),
+                          const SizedBox(height: 50),
+                          Lottie.asset(
+                            AppImageAsset.verfiyEmail,
+                            height: 150,
+                            width: 150,
+                          ),
+                          const SizedBox(height: 50),
+                          OTPTextField(
+                            length: 5,
+                            width: MediaQuery.of(context).size.width,
+                            textFieldAlignment: MainAxisAlignment.spaceAround,
+                            fieldWidth: 45,
+                            fieldStyle: FieldStyle.box,
+                            outlineBorderRadius: 15,
+                            style: TextStyle(fontSize: 17),
+                            onCompleted: (String verfiycantionCode) {
+                              myController.goToSuccessSignUp(verfiycantionCode);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
       ),
     );
   }

@@ -15,13 +15,13 @@ abstract class SignupController extends GetxController {
 class SignUpControllerImp extends SignupController {
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
-  SignUpData signUpData = SignUpData(Get.find<Crud>());
-
   late TextEditingController username;
   late TextEditingController email;
   late TextEditingController phone;
   late TextEditingController password;
   StatusRequest statusRequest = StatusRequest.none;
+
+  SignUpData signUpData = SignUpData(Get.find<Crud>());
 
   List data = [];
 
@@ -30,18 +30,21 @@ class SignUpControllerImp extends SignupController {
     var formData = formState.currentState;
     if (formData!.validate()) {
       statusRequest = StatusRequest.loading;
+      update();
       var response = await signUpData.postData(
         username.text,
         password.text,
         email.text,
         phone.text,
       );
-
       statusRequest = handingData(response);
       if (statusRequest == StatusRequest.success) {
         if (response['status'] == "success") {
-          data.addAll(response);
-          Get.offNamed(AppRoute.verfiyCodeSignUp);
+          // data.addAll(response);
+          Get.offNamed(
+            AppRoute.verfiyCodeSignUp,
+            arguments: {"email": email.text},
+          );
         } else {
           Get.snackbar(
             "Warning",
@@ -54,8 +57,8 @@ class SignUpControllerImp extends SignupController {
           statusRequest = StatusRequest.failure;
         }
       }
-      update();
-    } else {}
+    }
+    update();
   }
 
   @override

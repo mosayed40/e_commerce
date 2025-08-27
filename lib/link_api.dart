@@ -5,4 +5,5 @@ class AppLinkApi {
 
   //Auth
   static const String signUp = "$server/auth/signUp.php";
+  static const String verfiycodeSignUp = "$server/auth/verfiycode.php";
 }

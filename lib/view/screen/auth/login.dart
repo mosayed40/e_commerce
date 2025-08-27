@@ -42,23 +42,7 @@ class Login extends StatelessWidget {
           key: myController.formState,
           child: ListView(
             children: [
-              Icon(
-                Icons.account_circle_outlined,
-                size: 150,
-                color: AppColors.buttonColor,
-              ),
-              Lottie.asset(
-                AppImageAsset.iconLogin,
-                height: 150,
-                width: 150,
-                // fit: BoxFit.fill,
-              ),
-
-              // Icon(
-              //   Icons.account_circle_outlined,
-              //   size: 150,
-              //   color: AppColors.buttonColor,
-              // ),
+              Lottie.asset(AppImageAsset.iconLogin, height: 150, width: 150),
               const SizedBox(height: 20),
               const CustomTextTitleAuth(textTitle: "titleSignPages"),
               const SizedBox(height: 10),
@@ -74,15 +58,6 @@ class Login extends StatelessWidget {
                 myController: myController.email,
               ),
               SizedBox(height: 15),
-              CustomTextFormAuth(
-                valid: (val) {
-                  return VaildInput(val!, 5, 30, "password");
-                },
-                labelText: "labelPassword",
-                hintText: "lintPasword",
-                suffixIcon: Icons.lock_outlined,
-                myController: myController.password,
-              ),
               GetBuilder<LoginControllerImp>(
                 builder:
                     (controller) => CustomTextFormAuth(

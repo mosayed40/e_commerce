@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:http/http.dart' as http;
 import 'package:e_commerce_app/core/class/status_request.dart';
 import 'package:e_commerce_app/core/functions/chick_internet.dart';
+import 'package:http/http.dart' as http;
 
 class Crud {
   Future<Either<StatusRequest, Map>> postData(String linkUrl, Map data) async {
@@ -13,6 +13,7 @@ class Crud {
           Map responsebody = jsonDecode(response.body);
           return Right(responsebody);
         } else {
+          print("خطأ في الاتصال");
           return Left(StatusRequest.serverfailure);
         }
       } else {
@@ -20,9 +21,9 @@ class Crud {
         return Left(StatusRequest.offlinefailure);
       }
     } catch (err) {
-      print("خطأ في الاتصال");
+      print(" =================================== serverExeption");
       print(err);
-      return Left(StatusRequest.serverfailure);
+      return Left(StatusRequest.serverexception);
     }
   }
 }
